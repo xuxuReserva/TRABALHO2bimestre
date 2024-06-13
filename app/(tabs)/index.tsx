@@ -1,62 +1,105 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import React from 'react'
+import { Image, Text, TouchableOpacity, View, StyleSheet, Linking, ToastAndroid  } from 'react-native';
+import { BlurView } from 'react-native-blur';
 
-import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+
 
 export default function HomeScreen() {
+  const openUrl = async (url) => {
+    if (await Linking.canOpenURL(url)) {
+      await Linking.openURL(url);
+    } else {
+      ToastAndroid.show("Can't open this URL", ToastAndroid.SHORT);
+    }
+  };
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
       headerImage={
         <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
+          source={require('@/assets/images/perfil.jpeg')}
+          style={styles.profileImage}
         />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Bem vindo !</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle"></ThemedText>
-        <ThemedText>
-          
-         
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle"></ThemedText>
-        <ThemedText>
-          
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle"></ThemedText>
-        <ThemedText>
-          
-        </ThemedText>
-      </ThemedView>
+      }
+      renderHeader={() => (
+        <BlurView
+          style={styles.blurContainer}
+          blurType="light"
+          blurAmount={10}
+        >
+
+        </BlurView>
+      )}
+    >
+
+      <Text style={styles.title}>Bem-vindo!</Text>   
+
+      <View style={styles.container}>
+        <TouchableOpacity
+          onPress={() => openUrl('https://www.facebook.com/')}
+          style={styles.button}
+        >
+          <Text style={styles.buttonText}>Facebook</Text>
+        </TouchableOpacity>  
+      </View>
+
+      <View>
+      <TouchableOpacity
+          onPress={() => openUrl('https://www.facebook.com/')}
+          style={styles.button}
+        >
+          <Text style={styles.buttonText}>Facebook</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View>
+      <TouchableOpacity
+          onPress={() => openUrl('https://www.facebook.com/')}
+          style={styles.button}
+        >
+          <Text style={styles.buttonText}>Facebook</Text>
+        </TouchableOpacity>
+      </View>
+     
     </ParallaxScrollView>
+    
   );
 }
-
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
+  container: {
+    flex: 1,
+  },
+  profileImage: {
+    width: 395,
+    height: 250,
+    resizeMode: 'cover',
+  },
+  blurContainer: {
+    flex: 1,
     alignItems: 'center',
-    gap: 8,
+    justifyContent: 'center',
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#fff',
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginTop: 20,
+  },
+  button: {
+    backgroundColor: 'white',
+    paddingVertical: 20,
+    paddingHorizontal: 70,
+    borderRadius: 8,
+  },
+  buttonText: {
+    color: '#000',
+    fontWeight: 'bold',
+    textAlign: 'center'
   },
 });
