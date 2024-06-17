@@ -2,6 +2,8 @@ import React from 'react'
 import { Image, Text, TouchableOpacity, View, StyleSheet, Linking, ToastAndroid  } from 'react-native';
 import { BlurView } from 'react-native-blur';
 
+
+
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 
 const fazerChamada = async () => {
@@ -26,11 +28,12 @@ export default function HomeScreen() {
 
   return (
     <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
+      headerBackgroundColor={{ light: '#FFFAFA', dark: '#4169E1' }}
       headerImage={
         <Image
           source={require('@/assets/images/fundo.jpg')}
           style={styles.profileImage}
+          
         />
 
       }
@@ -64,7 +67,13 @@ export default function HomeScreen() {
           onPress={() => openUrl('https://www.facebook.com/')}
           style={styles.button}
         >
-          <Text style={styles.buttonText}>Facebook</Text>
+          <View 
+          style={{ flexDirection: 'row', alignItems: 'center' }}
+          >
+            <Image source={require('@/assets/images/')}  />
+            </View>
+            <Text style={styles.buttonText}>Facebook</Text>
+          
         </TouchableOpacity>  
       </View>
 
@@ -132,14 +141,15 @@ const styles = StyleSheet.create({
   profileImage: {
     width: 395,
     height: 250,
-    marginHorizontal: 10,
     resizeMode: "repeat",
+    
     
   },
   blurContainer: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    marginTop: 10,
   },
   title: {
     fontSize: 24,
