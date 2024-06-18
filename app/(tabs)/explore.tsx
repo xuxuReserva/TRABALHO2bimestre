@@ -1,45 +1,186 @@
-import Ionicons from '@expo/vector-icons/Ionicons';
-import { StyleSheet, Image, Platform } from 'react-native';
+import React from 'react'
+import { Image, Text, TouchableOpacity, View, StyleSheet, Linking, ToastAndroid  } from 'react-native';
+import { BlurView } from 'react-native-blur';
 
-import { Collapsible } from '@/components/Collapsible';
-import { ExternalLink } from '@/components/ExternalLink';
+
+
 import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
 
-export default function TabTwoScreen() {
+const fazerChamada = async () => {
+  
+  const numero = "18991207281"; 
+  const url = `tel:${numero}`;
+  try {
+    await Linking.openURL(url);
+  } catch (error) {
+    console.error("Erro ao abrir o cliente de telefone:", error);
+  }
+};
+
+export default function HomeScreen() {
+  const openUrl = async (url) => {
+    if (await Linking.canOpenURL(url)) {
+      await Linking.openURL(url);
+    } else {
+      ToastAndroid.show("Can't open this URL", ToastAndroid.SHORT);
+    }
+  };
+
   return (
     <ParallaxScrollView
-      headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
-      headerImage={<Ionicons size={310} name="code-slash" style={styles.headerImage} />}>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Explore</ThemedText>
-      </ThemedView>
+      headerBackgroundColor={{ light: '#FFFAFA', dark: '#4169E1' }}
+      headerImage={
+        <Image
+          source={require('@/assets/images/praia.jpeg')}
+          style={styles.profileImage}
+          
+        />
+
+      }
       
-        
-        
-        {Platform.select({
-          ios: (
-            <ThemedText>
-              The <ThemedText type="defaultSemiBold">components/ParallaxScrollView.tsx</ThemedText>{' '}
-              component provides a parallax effect for the header image.
-            </ThemedText>
-          ),
-        })}
-      
+      renderHeader={() => (
+        <BlurView
+          style={styles.blurContainer}
+          blurType="light"
+          blurAmount={10}
+        >
+
+        </BlurView>
+      )}
+    >
+
+        <View style={{justifyContent: 'center', alignItems: 'center'}}>
+          <View>
+          <Image
+          source={require('@/assets/images/perfil2.jpeg')}
+          style={{width: 100, height: 100, borderRadius: 100 }}
+        />
+          </View>
+        </View>
+
+      <Text style={styles.title}>João Vitor Dutra Macedo</Text>  
+          <Text style={styles.texto}>Estudante</Text>
+          
+          
+
+      <View style={styles.container}>
+        <TouchableOpacity
+          onPress={() => openUrl('https://www.facebook.com/')}
+          style={styles.button}
+        >
+          <View 
+          style={{ flexDirection: 'row', alignItems: 'center' }}
+          >
+            <Image   />
+            </View>
+            <Text style={styles.buttonText}>Facebook</Text>
+          
+        </TouchableOpacity>  
+      </View>
+
+      <View>
+      <TouchableOpacity
+          onPress={() => openUrl('instagram://user?username=joaovitordutramacedo')}
+          style={styles.button}
+        >
+          <Text style={styles.buttonText}>Instagram</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View>
+      <TouchableOpacity
+          onPress={() => openUrl('https://wa.me/5518991207281')}
+          style={styles.button}
+        >
+          <Text style={styles.buttonText}>Whatsapp</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View>
+      <TouchableOpacity
+          onPress={() => openUrl('https://www.linkedin.com/in/jo%C3%A3o-vitor-dutra-macedo-989b53313/')}
+          style={styles.button}
+        >
+          <Text style={styles.buttonText}>Linkedin</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View>
+      <TouchableOpacity
+          onPress={() => openUrl('https://github.com/xuxuReserva')}
+          style={styles.button}
+        >
+          <Text style={styles.buttonText}>GitHub</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View>
+      <TouchableOpacity
+          onPress={fazerChamada}
+          style={styles.button}
+        >
+          <Text style={styles.buttonText}>Telefone</Text>
+        </TouchableOpacity>
+      </View>
+     
     </ParallaxScrollView>
+    
   );
 }
-
 const styles = StyleSheet.create({
-  headerImage: {
-    color: '#808080',
-    bottom: -90,
-    left: -35,
-    position: 'absolute',
+  container: {
+    flex: 1,
   },
-  titleContainer: {
+  perfil: {
+    borderRadius: 10,
+    width: 22,
+    height: 22,
+    alignItems: 'center',
+    justifyContent: 'center',
+
+  },
+  profileImage: {
+    width: 395,
+    height: 250,
+    resizeMode: "cover",
+    position: 'absolute'
+    
+  },
+  blurContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 30,
+    position: 'absolute'
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#fff',
+    textAlign: "center",
+  },
+  texto: {
+    fontSize: 20,
+    color: '#fff',
+    textAlign: "center",
+    fontWeight: 'bold',
+    marginTop: -5
+    
+  },
+  buttonContainer: {
     flexDirection: 'row',
-    gap: 8,
+    justifyContent: 'space-around',
+    marginTop: 20,
+  },
+  button: {
+    backgroundColor: 'white',
+    paddingVertical: 20,
+    paddingHorizontal: 70,
+    borderRadius: 8,
+  },
+  buttonText: {
+    color: '#000',
+    fontWeight: 'bold',
+    textAlign: 'center'
   },
 });
